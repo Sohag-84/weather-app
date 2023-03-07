@@ -16,8 +16,8 @@ class TodayWeather extends StatelessWidget {
       children: [
         WeatherBg(
           weatherType: WeatherType.lightRainy,
-          width: double.infinity,
-          height: 280.h,
+          width: MediaQuery.of(context).size.width,
+          height: 250.h,
         ),
         Column(
           children: [
@@ -47,7 +47,7 @@ class TodayWeather extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                  SizedBox(height: 35.h),
+                  SizedBox(height: 15.h),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 8.w),
                     child: Row(
@@ -101,7 +101,7 @@ class TodayWeather extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(height: 30.h),
+                  SizedBox(height: 14.h),
                   Container(
                     padding: EdgeInsets.all(8.w),
                     margin: EdgeInsets.all(8.w),

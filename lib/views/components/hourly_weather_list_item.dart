@@ -13,8 +13,8 @@ class HourlyWeatherListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 120.h,
-      padding: EdgeInsets.all(8.h),
-      margin: EdgeInsets.all(8.h),
+      padding: EdgeInsets.all(2.h),
+      margin: EdgeInsets.symmetric(horizontal: 8.h),
       decoration: BoxDecoration(
         color: Colors.white30,
         borderRadius: BorderRadius.circular(20.r),
@@ -47,7 +47,7 @@ class HourlyWeatherListItem extends StatelessWidget {
             ],
           ),
           Container(
-            height: 50.h,
+            height: 40.h,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.teal,

@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
             controller: searchController,
             decoration: const InputDecoration(hintText: "search by city,zip"),
           ),
-          actions: <Widget>[
+          actions: [
             ElevatedButton(
               child: const Text("Cancel"),
               onPressed: () => Navigator.pop(context),
@@ -61,9 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 97, 95, 95).withOpacity(.70),
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text("Weather App"),
-        automaticallyImplyLeading: false,
+        elevation: 0,
         actions: [
           IconButton(
             onPressed: () async {
@@ -77,80 +78,77 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           IconButton(
             onPressed: () {
-              onPressed:
-              () {
-                setState(() {
-                  queryText = "auto:ip";
-                });
-              };
+              setState(() {
+                queryText = "auto:ip";
+              });
             },
-            icon: Icon(Icons.my_location),
+            icon: const Icon(Icons.my_location),
           ),
         ],
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: FutureBuilder(
-            future: ApiServices().getWeatherData(location: queryText),
-            builder: (context, AsyncSnapshot snapshot) {
-              WeatherModel? weatherData = snapshot.data;
-              if (snapshot.hasData) {
-                return Column(
-                  children: [
-                    TodayWeather(weatherData: weatherData),
-                    SizedBox(height: 14.h),
-                    Text(
-                      "Weather by Hours",
-                      style: TextStyle(
-                        fontSize: 20.sp,
+        child: FutureBuilder(
+          future: ApiServices().getWeatherData(location: queryText),
+          builder: (context, AsyncSnapshot snapshot) {
+            WeatherModel? weatherData = snapshot.data;
+            if (snapshot.hasData) {
+              return Column(
+                children: [
+                  TodayWeather(weatherData: weatherData),
+                  SizedBox(height: 10.h),
+                  Text(
+                    "Weather by Hours",
+                    style: TextStyle(
+                       fontSize: 16.sp,
                         color: Colors.white,
-                      ),
+                        fontWeight: FontWeight.bold
                     ),
-                    SizedBox(
-                      height: 150.h,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: weatherData!
-                                .forecast?.forecastday?[0].hour?.length ??
-                            0,
+                  ),
+                  SizedBox(height: 8.h),
+                  SizedBox(
+                    height: 115.h,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: weatherData!
+                              .forecast?.forecastday?[0].hour?.length ??
+                          0,
+                      itemBuilder: (context, index) {
+                        Hour? hour = weatherData
+                            .forecast!.forecastday![0].hour![index];
+                        return HourlyWeatherListItem(hour: hour);
+                      },
+                    ),
+                  ),
+                  SizedBox(height: 5.h),
+                  Text(
+                    "Next 7 Days Weather",
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                        itemCount: weatherData.forecast!.forecastday!.length,
                         itemBuilder: (context, index) {
-                          Hour? hour = weatherData
-                              .forecast!.forecastday![0].hour![index];
-                          return HourlyWeatherListItem(hour: hour);
-                        },
-                      ),
-                    ),
-                    SizedBox(height: 14.h),
-                    Text(
-                      "Next 7 Days Weather",
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                          itemCount: weatherData.forecast!.forecastday!.length,
-                          itemBuilder: (context, index) {
-                            Forecastday? forcastDay =
-                                weatherData.forecast!.forecastday![index];
-                            return FutureWeatherDataListItem(
-                              forecastday: forcastDay,
-                            );
-                          }),
-                    )
-                  ],
-                );
-              } else if (snapshot.hasError) {
-                return Center(
-                  child: Text("Error has occure"),
-                );
-              } else {
-                return indicator();
-              }
-            },
-          ),
+                          Forecastday? forcastDay =
+                              weatherData.forecast!.forecastday![index];
+                          return FutureWeatherDataListItem(
+                            forecastday: forcastDay,
+                          );
+                        }),
+                  )
+                ],
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text("No data found"),
+              );
+            } else {
+              return indicator();
+            }
+          },
         ),
       ),
     );
