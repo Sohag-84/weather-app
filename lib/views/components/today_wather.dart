@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:weather_application/models/weather_model.dart';
 
 class TodayWeather extends StatelessWidget {
-  final WeatherModel weatherData;
+  final WeatherModel? weatherData;
   const TodayWeather({Key? key, required this.weatherData}) : super(key: key);
 
   @override
@@ -30,7 +30,7 @@ class TodayWeather extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    weatherData.location!.name ?? "",
+                    weatherData!.location!.name ?? "",
                     style: TextStyle(
                       fontSize: 20.sp,
                       color: Colors.white,
@@ -39,7 +39,7 @@ class TodayWeather extends StatelessWidget {
                   Text(
                     DateFormat.yMMMMEEEEd().format(
                       DateTime.parse(
-                        weatherData.current!.lastUpdated.toString(),
+                        weatherData!.current!.lastUpdated.toString(),
                       ),
                     ),
                     style: TextStyle(
@@ -58,7 +58,7 @@ class TodayWeather extends StatelessWidget {
                             color: Colors.white10,
                           ),
                           child: Image.network(
-                            "https:${weatherData.current!.condition!.icon}",
+                            "https:${weatherData!.current!.condition!.icon}",
                           ),
                         ),
                         Spacer(),
@@ -70,7 +70,7 @@ class TodayWeather extends StatelessWidget {
                                 Padding(
                                   padding: EdgeInsets.only(top: 8.h),
                                   child: Text(
-                                    weatherData.current!.tempC.toString(),
+                                    weatherData!.current!.tempC.toString(),
                                     style: TextStyle(
                                       color: Colors.pink,
                                       fontSize: 30.sp,
@@ -89,7 +89,7 @@ class TodayWeather extends StatelessWidget {
                               ],
                             ),
                             Text(
-                              weatherData.current!.condition!.text ?? "",
+                              weatherData!.current!.condition!.text ?? "",
                               style: TextStyle(
                                 fontSize: 15.sp,
                                 fontWeight: FontWeight.bold,
@@ -121,7 +121,7 @@ class TodayWeather extends StatelessWidget {
                                       fontSize: 15.sp, color: Colors.white),
                                 ),
                                 Text(
-                                  weatherData.current!.feelslikeC.toString(),
+                                  weatherData!.current!.feelslikeC.toString(),
                                   style: TextStyle(
                                       fontSize: 15.sp, color: Colors.white),
                                 ),
@@ -136,7 +136,7 @@ class TodayWeather extends StatelessWidget {
                                       fontSize: 15.sp, color: Colors.white),
                                 ),
                                 Text(
-                                  "${weatherData.current!.windKph} km/h",
+                                  "${weatherData!.current!.windKph} km/h",
                                   style: TextStyle(
                                       fontSize: 15.sp, color: Colors.white),
                                 ),
@@ -156,7 +156,7 @@ class TodayWeather extends StatelessWidget {
                                       fontSize: 15.sp, color: Colors.white),
                                 ),
                                 Text(
-                                  "${weatherData.current!.humidity}%",
+                                  "${weatherData!.current!.humidity}%",
                                   style: TextStyle(
                                       fontSize: 15.sp, color: Colors.white),
                                 ),
@@ -171,7 +171,7 @@ class TodayWeather extends StatelessWidget {
                                       fontSize: 15.sp, color: Colors.white),
                                 ),
                                 Text(
-                                  "${weatherData.current!.visKm} km",
+                                  "${weatherData!.current!.visKm} km",
                                   style: TextStyle(
                                       fontSize: 15.sp, color: Colors.white),
                                 ),
