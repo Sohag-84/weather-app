@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 class ApiServices {
   Future<WeatherModel> getWeatherData({required location}) async {
     String url = "$baseUrl&q=$location&days=7";
+    //"$baseUrl&q=$location&days=7"
 
     try {
       http.Response response = await http.get(Uri.parse(url));
