@@ -10,12 +10,58 @@ class TodayWeather extends StatelessWidget {
   final WeatherModel? weatherData;
   const TodayWeather({Key? key, required this.weatherData}) : super(key: key);
 
+
+  WeatherType getWeatherType(Current? current) {
+    if (current?.isDay == 1) {
+      if (current?.condition?.text == "Sunny") {
+        return WeatherType.sunny;
+      } else if (current?.condition?.text == "Overcast") {
+        return WeatherType.overcast;
+      } else if (current?.condition?.text == "Partly cloudy") {
+        return WeatherType.cloudy;
+      } else if (current?.condition?.text == "Cloudy") {
+        return WeatherType.cloudy;
+      } else if (current?.condition?.text == "Clear") {
+        return WeatherType.sunny;
+      } else if (current?.condition?.text == "Mist") {
+        return WeatherType.lightSnow;
+      } else if (current!.condition!.text!.contains("thunder")) {
+        return WeatherType.thunder;
+      } else if (current.condition!.text!.contains("showers")) {
+        return WeatherType.middleSnow;
+      } else if (current.condition!.text!.contains("rain")) {
+        return WeatherType.heavyRainy;
+      }
+    } else {
+      if (current?.condition?.text == "Sunny") {
+        return WeatherType.sunny;
+      } else if (current?.condition?.text == "Overcast") {
+        return WeatherType.overcast;
+      } else if (current?.condition?.text == "Partly cloudy") {
+        return WeatherType.cloudyNight;
+      } else if (current?.condition?.text == "Cloudy") {
+        return WeatherType.cloudyNight;
+      } else if (current?.condition?.text == "Clear") {
+        return WeatherType.sunnyNight;
+      } else if (current?.condition?.text == "Mist") {
+        return WeatherType.lightSnow;
+      } else if (current!.condition!.text!.contains("thunder")) {
+        return WeatherType.thunder;
+      } else if (current.condition!.text!.contains("showers")) {
+        return WeatherType.middleSnow;
+      } else if (current.condition!.text!.contains("rain")) {
+        return WeatherType.heavyRainy;
+      }
+    }
+    return WeatherType.middleRainy;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         WeatherBg(
-          weatherType: WeatherType.lightRainy,
+          weatherType: getWeatherType(weatherData?.current),
           width: MediaQuery.of(context).size.width,
           height: 250.h,
         ),
