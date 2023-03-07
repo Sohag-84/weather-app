@@ -8,6 +8,7 @@ import 'package:weather_application/views/components/hourly_weather_list_item.da
 import 'package:weather_application/views/components/today_wather.dart';
 
 import '../../models/weather_model.dart';
+import '../components/future_weather_list_item.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -59,6 +60,25 @@ class _HomeScreenState extends State<HomeScreen> {
                         return HourlyWeatherListItem(hour: hour);
                       },
                     ),
+                  ),
+                  SizedBox(height: 14.h),
+                  Text(
+                    "Next 7 Days Weather",
+                    style: TextStyle(
+                      fontSize: 20.sp,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                        itemCount: weatherData.forecast!.forecastday!.length,
+                        itemBuilder: (context, index) {
+                          Forecastday? forcastDay =
+                              weatherData.forecast!.forecastday![index];
+                          return FutureWeatherDataListItem(
+                            forecastday: forcastDay,
+                          );
+                        }),
                   )
                 ],
               );
